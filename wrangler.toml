@@ -4,6 +4,3 @@ pages_build_output_dir = "dist"
 
 # Cloudflare Pages configuration
 # Deployment happens via GitHub Actions or Pages dashboard
-
-[site]
-bucket = "dist"
