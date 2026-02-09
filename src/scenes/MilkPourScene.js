@@ -59,25 +59,9 @@ export default class MilkPourScene extends Phaser.Scene {
   }
 
   createMilkAndCup() {
-    // Milk bottle
-    const milkBottle = this.add.container(300, 400);
-
-    const bottle = this.add.rectangle(0, 0, 80, 200, COLORS.WHITE);
-    bottle.setStrokeStyle(4, COLORS.BLACK);
-    milkBottle.add(bottle);
-
-    const cap = this.add.rectangle(0, -110, 60, 20, COLORS.SUNSET_ORANGE);
-    cap.setStrokeStyle(3, COLORS.BLACK);
-    milkBottle.add(cap);
-
-    const label = this.add.text(0, 0, 'MILK', {
-      fontSize: '20px',
-      fontFamily: FONTS.TITLE,
-      color: '#333333',
-      fontStyle: 'bold'
-    });
-    label.setOrigin(0.5);
-    milkBottle.add(label);
+    // Milk bottle sprite (cute pixel art!)
+    const milkBottle = this.add.image(300, 400, 'milk-bottle-sprite');
+    milkBottle.setScale(0.4); // Scale to appropriate size
 
     // Coffee cup
     const cupX = 1600;

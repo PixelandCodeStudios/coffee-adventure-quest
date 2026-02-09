@@ -33,10 +33,9 @@ export default class CrabPhotographyScene extends Phaser.Scene {
   }
 
   createBackground() {
-    // Same beach background as discovery scene
-    const bgTop = this.add.rectangle(POSITIONS.CENTER_X, 300, 1920, 600, COLORS.SKY_BLUE);
-    const bgBottom = this.add.rectangle(POSITIONS.CENTER_X, 800, 1920, 560, COLORS.OCEAN_BLUE);
-    const sand = this.add.rectangle(POSITIONS.CENTER_X, 900, 1920, 360, COLORS.SAND);
+    // Beautiful beach background image
+    const bg = this.add.image(POSITIONS.CENTER_X, POSITIONS.CENTER_Y, 'beach-background');
+    bg.setDisplaySize(1920, 1080); // Scale to fit screen
 
     // Title
     const title = this.add.text(POSITIONS.CENTER_X, 100, '📸 Crab Photography Challenge', {

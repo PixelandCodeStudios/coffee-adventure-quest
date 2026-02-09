@@ -18,12 +18,18 @@ export default class BootScene extends Phaser.Scene {
     // Create loading bar
     this.createLoadingBar();
 
-    // In a full implementation, you would load assets here:
-    // this.load.image('background-kitchen', 'assets/images/backgrounds/kitchen.png');
-    // this.load.audio('grind', 'assets/audio/sfx/grind.mp3');
-    // etc.
+    // Load sprite images
+    this.load.image('coffee-bean-sprite', '/assets/sprites/Coffee-Bean-Sprite.png');
+    this.load.image('milk-bottle-sprite', '/assets/sprites/milk-bottle-sprite.png');
+    this.load.image('birthday-avatar', '/assets/sprites/birthday-avatar.png');
+    this.load.image('beach-background', '/assets/backgrounds/beach-background.png');
 
-    // For now, we'll generate placeholder graphics
+    // Load crab animation spritesheet (4 frames in a row)
+    this.load.spritesheet('crab-sprite', '/assets/sprites/crab-animation-sheet.png', {
+      frameWidth: 512,  // Adjust based on actual image dimensions
+      frameHeight: 512
+    });
+
     console.log('🎮 Loading Coffee Adventure Quest...');
   }
 
@@ -42,6 +48,14 @@ export default class BootScene extends Phaser.Scene {
 
     // Create shared graphics textures (placeholders)
     this.createPlaceholderGraphics();
+
+    // Create crab walk animation from spritesheet
+    this.anims.create({
+      key: 'crab-walk',
+      frames: this.anims.generateFrameNumbers('crab-sprite', { start: 0, end: 3 }),
+      frameRate: 8,
+      repeat: -1
+    });
 
     // Show welcome message
     this.showWelcomeScreen();

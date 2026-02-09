@@ -18,46 +18,17 @@ export default class Crab extends Phaser.GameObjects.Container {
   }
 
   createCrab() {
-    const graphics = this.scene.add.graphics();
-
-    // Body
-    graphics.fillStyle(COLORS.SUNSET_ORANGE);
-    graphics.fillEllipse(0, 0, 80, 50);
-    graphics.lineStyle(4, 0x000000);
-    graphics.strokeEllipse(0, 0, 80, 50);
-
-    // Eyes on stalks
-    graphics.fillStyle(COLORS.BLACK);
-    graphics.fillCircle(-20, -25, 8);
-    graphics.fillCircle(20, -25, 8);
-
-    graphics.fillStyle(COLORS.WHITE);
-    graphics.fillCircle(-20, -27, 4);
-    graphics.fillCircle(20, -27, 4);
-
-    // Claws
-    graphics.fillStyle(COLORS.SUNSET_ORANGE);
-    graphics.fillEllipse(-50, -5, 30, 25);
-    graphics.fillEllipse(50, -5, 30, 25);
-    graphics.strokeEllipse(-50, -5, 30, 25);
-    graphics.strokeEllipse(50, -5, 30, 25);
-
-    // Legs (simple lines)
-    graphics.lineStyle(3, 0x000000);
-    for (let i = -2; i <= 2; i++) {
-      if (i !== 0) {
-        const x = i * 15;
-        graphics.lineBetween(x, 15, x, 35);
-      }
-    }
-
-    this.add(graphics);
+    // Animated crab sprite!
+    this.crabSprite = this.scene.add.sprite(0, 0, 'crab-sprite');
+    this.crabSprite.setScale(0.2); // Scale to appropriate size
+    this.crabSprite.play('crab-walk'); // Start walking animation
+    this.add(this.crabSprite);
 
     // Camera flash overlay (hidden initially)
-    this.flashOverlay = this.scene.add.rectangle(0, 0, 100, 70, COLORS.WHITE, 0);
+    this.flashOverlay = this.scene.add.rectangle(0, 0, 100, 100, COLORS.WHITE, 0);
     this.add(this.flashOverlay);
 
-    this.setSize(100, 70);
+    this.setSize(100, 100);
   }
 
   setupInteraction() {

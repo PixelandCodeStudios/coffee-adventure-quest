@@ -33,28 +33,9 @@ export default class BeachDiscoveryScene extends Phaser.Scene {
   }
 
   createBackground() {
-    // Sky and ocean gradient
-    const bgTop = this.add.rectangle(POSITIONS.CENTER_X, 300, 1920, 600, COLORS.SKY_BLUE);
-    const bgBottom = this.add.rectangle(POSITIONS.CENTER_X, 800, 1920, 560, COLORS.OCEAN_BLUE);
-
-    // Sand
-    const sand = this.add.rectangle(POSITIONS.CENTER_X, 900, 1920, 360, COLORS.SAND);
-
-    // Simple waves
-    const waveGraphics = this.add.graphics();
-    waveGraphics.fillStyle(COLORS.WHITE, 0.3);
-    for (let i = 0; i < 10; i++) {
-      waveGraphics.fillEllipse(i * 200, 600, 150, 30);
-    }
-
-    // Animated wave movement
-    this.tweens.add({
-      targets: waveGraphics,
-      x: -200,
-      duration: 3000,
-      repeat: -1,
-      ease: 'Linear'
-    });
+    // Beautiful beach background image with balloons and confetti!
+    const bg = this.add.image(POSITIONS.CENTER_X, POSITIONS.CENTER_Y, 'beach-background');
+    bg.setDisplaySize(1920, 1080); // Scale to fit screen
 
     // Title
     const title = this.add.text(POSITIONS.CENTER_X, 100, '🐚 Beach Discovery', {
