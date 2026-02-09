@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS } from '../utils/Constants.js';
+import { COLORS, FONTS } from '../utils/Constants.js';
 
 /**
  * Shell - Clickable beach shell that may contain the caramel pistachio ingredient
@@ -101,7 +101,7 @@ export default class Shell extends Phaser.GameObjects.Container {
       // Empty shell
       const emptyText = this.scene.add.text(this.x, this.y - 60, 'Empty!', {
         fontSize: '20px',
-        fontFamily: 'Arial',
+        fontFamily: FONTS.BODY,
         color: '#666666'
       });
       emptyText.setOrigin(0.5);
@@ -125,7 +125,7 @@ export default class Shell extends Phaser.GameObjects.Container {
 
     const label = this.scene.add.text(0, 0, 'CP', {
       fontSize: '18px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.BODY,
       color: '#FFFFFF',
       fontStyle: 'bold'
     });

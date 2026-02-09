@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { SCENES, COLORS, POSITIONS, STICKER_KEYS } from '../utils/Constants.js';
+import { SCENES, COLORS, POSITIONS, STICKER_KEYS, FONTS } from '../utils/Constants.js';
 import Crab from '../game-objects/Crab.js';
 import ParticleManager from '../systems/ParticleManager.js';
 import StickerManager from '../systems/StickerManager.js';
@@ -41,7 +41,7 @@ export default class CrabPhotographyScene extends Phaser.Scene {
     // Title
     const title = this.add.text(POSITIONS.CENTER_X, 100, '📸 Crab Photography Challenge', {
       fontSize: '48px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFFFFF',
       fontStyle: 'bold',
       stroke: '#FF6600',
@@ -102,7 +102,7 @@ export default class CrabPhotographyScene extends Phaser.Scene {
     const instructions = this.add.text(POSITIONS.CENTER_X, 250,
       'Click the crab to take a perfect photo and get the ingredient back!', {
       fontSize: '28px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFFFFF',
       stroke: '#000000',
       strokeThickness: 4,
@@ -129,7 +129,7 @@ export default class CrabPhotographyScene extends Phaser.Scene {
     const msg = this.add.text(POSITIONS.CENTER_X, POSITIONS.CENTER_Y - 100,
       '📸 Perfect shot!\n🎉 Ingredient retrieved!', {
       fontSize: '42px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFD700',
       fontStyle: 'bold',
       stroke: '#000000',

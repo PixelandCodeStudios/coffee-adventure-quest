@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { SCENES, COLORS, POSITIONS } from '../utils/Constants.js';
+import { SCENES, COLORS, POSITIONS, FONTS } from '../utils/Constants.js';
 import StateManager from '../systems/StateManager.js';
 import AudioManager from '../systems/AudioManager.js';
 import ParticleManager from '../systems/ParticleManager.js';
@@ -57,7 +57,7 @@ export default class BootScene extends Phaser.Scene {
     // Title
     const title = this.add.text(centerX, centerY - 100, '☕ Coffee Adventure Quest', {
       fontSize: '48px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFD700',
       fontStyle: 'bold',
       stroke: '#6F4E37',
@@ -68,7 +68,7 @@ export default class BootScene extends Phaser.Scene {
     // Loading text
     const loadingText = this.add.text(centerX, centerY + 50, 'Loading...', {
       fontSize: '24px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFFFFF'
     });
     loadingText.setOrigin(0.5);
@@ -134,7 +134,7 @@ export default class BootScene extends Phaser.Scene {
     // Title
     const title = this.add.text(centerX, centerY - 200, '☕ Coffee Adventure Quest 🎉', {
       fontSize: '64px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFD700',
       fontStyle: 'bold',
       stroke: '#6F4E37',
@@ -145,7 +145,7 @@ export default class BootScene extends Phaser.Scene {
     // Subtitle
     const subtitle = this.add.text(centerX, centerY - 100, 'A Birthday Game for Jessi', {
       fontSize: '36px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFFFFF',
       fontStyle: 'italic',
       stroke: '#000000',
@@ -159,7 +159,7 @@ export default class BootScene extends Phaser.Scene {
       'Collect ingredients through fun mini-games,\n' +
       'then celebrate with dancing and sparkles! ✨', {
       fontSize: '24px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#333333',
       align: 'center'
     });
@@ -172,7 +172,7 @@ export default class BootScene extends Phaser.Scene {
 
     const buttonText = this.add.text(centerX, centerY + 250, 'Start Game! ☕', {
       fontSize: '32px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFFFFF',
       fontStyle: 'bold'
     });

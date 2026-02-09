@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { SCENES, COLORS, POSITIONS, STICKER_KEYS } from '../utils/Constants.js';
+import { SCENES, COLORS, POSITIONS, STICKER_KEYS, FONTS } from '../utils/Constants.js';
 import DraggableBean from '../game-objects/DraggableBean.js';
 import ParticleManager from '../systems/ParticleManager.js';
 import StickerManager from '../systems/StickerManager.js';
@@ -52,7 +52,7 @@ export default class CoffeeBeanScene extends Phaser.Scene {
     // Title
     const title = this.add.text(POSITIONS.CENTER_X, 100, 'Coffee Bean Collection', {
       fontSize: '48px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#6F4E37',
       fontStyle: 'bold',
       stroke: '#FFFFFF',
@@ -82,7 +82,7 @@ export default class CoffeeBeanScene extends Phaser.Scene {
     // Progress text
     this.progressText = this.add.text(grinderX, grinderY + 130, `0 / ${this.beansRequired}`, {
       fontSize: '32px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFFFFF',
       fontStyle: 'bold',
       stroke: '#000000',
@@ -122,7 +122,7 @@ export default class CoffeeBeanScene extends Phaser.Scene {
     const instructions = this.add.text(POSITIONS.CENTER_X, 250,
       'Drag all 5 coffee beans into the grinder!', {
       fontSize: '28px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#333333',
       align: 'center'
     });
@@ -167,7 +167,7 @@ export default class CoffeeBeanScene extends Phaser.Scene {
     const successMsg = this.add.text(POSITIONS.CENTER_X, POSITIONS.CENTER_Y,
       '✨ All beans collected! ✨\nGrinding complete!', {
       fontSize: '42px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFD700',
       fontStyle: 'bold',
       stroke: '#000000',

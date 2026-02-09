@@ -1,4 +1,4 @@
-import { STICKER_KEYS, TIMING, COLORS } from '../utils/Constants.js';
+import { STICKER_KEYS, TIMING, COLORS, FONTS } from '../utils/Constants.js';
 
 /**
  * StickerManager - Handles sticker unlock animations and display
@@ -46,7 +46,7 @@ export default class StickerManager {
     // "Sticker Unlocked!" text
     const unlockedText = this.scene.add.text(0, -100, 'Sticker Unlocked!', {
       fontSize: '32px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.SCRIPT,
       color: '#FFD700',
       fontStyle: 'bold',
       stroke: '#000000',
@@ -58,7 +58,7 @@ export default class StickerManager {
     // Sticker name
     const nameText = this.scene.add.text(0, 100, this.getStickerName(stickerKey), {
       fontSize: '24px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.SCRIPT,
       color: '#333333',
       fontStyle: 'bold'
     });

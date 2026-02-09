@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { SCENES, COLORS, POSITIONS, STICKER_KEYS } from '../utils/Constants.js';
+import { SCENES, COLORS, POSITIONS, STICKER_KEYS, FONTS } from '../utils/Constants.js';
 import PourMeter from '../game-objects/PourMeter.js';
 import ParticleManager from '../systems/ParticleManager.js';
 import StickerManager from '../systems/StickerManager.js';
@@ -49,7 +49,7 @@ export default class MilkPourScene extends Phaser.Scene {
 
     const title = this.add.text(POSITIONS.CENTER_X, 100, 'Perfect Milk Pour', {
       fontSize: '48px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#6F4E37',
       fontStyle: 'bold',
       stroke: '#FFFFFF',
@@ -72,7 +72,7 @@ export default class MilkPourScene extends Phaser.Scene {
 
     const label = this.add.text(0, 0, 'MILK', {
       fontSize: '20px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#333333',
       fontStyle: 'bold'
     });
@@ -107,7 +107,7 @@ export default class MilkPourScene extends Phaser.Scene {
     const instructions = this.add.text(POSITIONS.CENTER_X, 250,
       'Click to start pouring, then click again when the meter is in the yellow zone!', {
       fontSize: '26px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#333333',
       align: 'center',
       wordWrap: { width: 800 }
@@ -176,7 +176,7 @@ export default class MilkPourScene extends Phaser.Scene {
     const successMsg = this.add.text(POSITIONS.CENTER_X, POSITIONS.CENTER_Y,
       '✨ Perfect pour! ✨\nMilk added to coffee!', {
       fontSize: '42px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFD700',
       fontStyle: 'bold',
       stroke: '#000000',

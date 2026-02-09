@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { COLORS } from '../utils/Constants.js';
+import { COLORS, FONTS } from '../utils/Constants.js';
 
 /**
  * PourMeter - Timing-based meter for milk pouring mini-game
@@ -50,7 +50,7 @@ export default class PourMeter extends Phaser.GameObjects.Container {
     // Text labels
     this.label = this.scene.add.text(0, -50, 'Click to pour... click again to stop!', {
       fontSize: '22px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#333333',
       align: 'center'
     });

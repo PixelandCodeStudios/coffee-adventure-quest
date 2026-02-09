@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { SCENES, COLORS, POSITIONS, STICKER_KEYS } from '../utils/Constants.js';
+import { SCENES, COLORS, POSITIONS, STICKER_KEYS, FONTS } from '../utils/Constants.js';
 import ParticleManager from '../systems/ParticleManager.js';
 import StickerManager from '../systems/StickerManager.js';
 import TransitionManager from '../systems/TransitionManager.js';
@@ -39,7 +39,7 @@ export default class BrewingScene extends Phaser.Scene {
 
     const title = this.add.text(POSITIONS.CENTER_X, 100, '☕ Brewing the Perfect Coffee', {
       fontSize: '48px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#6F4E37',
       fontStyle: 'bold',
       stroke: '#FFFFFF',
@@ -67,7 +67,7 @@ export default class BrewingScene extends Phaser.Scene {
     // Progress text
     this.progressText = this.add.text(cupX, cupY + 180, `0 / ${this.totalIngredients} ingredients`, {
       fontSize: '28px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#333333',
       fontStyle: 'bold'
     });
@@ -105,7 +105,7 @@ export default class BrewingScene extends Phaser.Scene {
     // Label
     const text = this.add.text(0, 0, label, {
       fontSize: '18px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFFFFF',
       fontStyle: 'bold',
       align: 'center'
@@ -215,7 +215,7 @@ export default class BrewingScene extends Phaser.Scene {
     const instructions = this.add.text(POSITIONS.CENTER_X, 250,
       'Drag all 3 ingredients into the cup to brew your coffee!', {
       fontSize: '28px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#333333',
       align: 'center'
     });
@@ -300,7 +300,7 @@ export default class BrewingScene extends Phaser.Scene {
     const msg = this.add.text(POSITIONS.CENTER_X, POSITIONS.CENTER_Y,
       '☕ Perfect Coffee! ✨\n🎉 Ready to celebrate!', {
       fontSize: '48px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFD700',
       fontStyle: 'bold',
       stroke: '#000000',

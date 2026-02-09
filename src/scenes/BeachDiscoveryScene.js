@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { SCENES, COLORS, POSITIONS, STICKER_KEYS } from '../utils/Constants.js';
+import { SCENES, COLORS, POSITIONS, STICKER_KEYS, FONTS } from '../utils/Constants.js';
 import Shell from '../game-objects/Shell.js';
 import ParticleManager from '../systems/ParticleManager.js';
 import StickerManager from '../systems/StickerManager.js';
@@ -59,7 +59,7 @@ export default class BeachDiscoveryScene extends Phaser.Scene {
     // Title
     const title = this.add.text(POSITIONS.CENTER_X, 100, '🐚 Beach Discovery', {
       fontSize: '48px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFFFFF',
       fontStyle: 'bold',
       stroke: '#0066CC',
@@ -103,7 +103,7 @@ export default class BeachDiscoveryScene extends Phaser.Scene {
     const instructions = this.add.text(POSITIONS.CENTER_X, 250,
       'Click the shells to find the caramel pistachio ingredient!', {
       fontSize: '28px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFFFFF',
       stroke: '#000000',
       strokeThickness: 4,
@@ -129,7 +129,7 @@ export default class BeachDiscoveryScene extends Phaser.Scene {
     const msg = this.add.text(POSITIONS.CENTER_X, 400,
       '🦀 Oh no! A crab grabbed it!', {
       fontSize: '36px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FF6600',
       fontStyle: 'bold',
       stroke: '#000000',

@@ -75,3 +75,9 @@ export const STICKER_KEYS = {
   CRAB: 'sticker-crab',
   CUP: 'sticker-cup'
 };
+
+export const FONTS = {
+  TITLE: 'Fredoka One',      // Fun, bold titles
+  BODY: 'Bubblegum Sans',     // Playful body text
+  SCRIPT: 'Pacifico'          // Handwritten special text
+};

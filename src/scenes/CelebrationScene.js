@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { SCENES, COLORS, POSITIONS, TIMING } from '../utils/Constants.js';
+import { SCENES, COLORS, POSITIONS, TIMING, FONTS } from '../utils/Constants.js';
 import Avatar from '../game-objects/Avatar.js';
 import CoffeeCup from '../game-objects/CoffeeCup.js';
 import StickerOrbit from '../game-objects/StickerOrbit.js';
@@ -186,7 +186,7 @@ export default class CelebrationScene extends Phaser.Scene {
     // Main title
     const title = this.add.text(centerX, 80, '✨ Happy Birthday, Jessi! ✨', {
       fontSize: '64px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFD700',
       fontStyle: 'bold',
       stroke: '#FF1493',
@@ -204,7 +204,7 @@ export default class CelebrationScene extends Phaser.Scene {
       'Take a sip—the world feels brighter, lighter, full of joy.\n\n' +
       '🎉 Today is all about YOU! ☕💖', {
       fontSize: '22px',
-      fontFamily: 'Arial',
+      fontFamily: FONTS.TITLE,
       color: '#FFFFFF',
       stroke: '#000000',
       strokeThickness: 3,
