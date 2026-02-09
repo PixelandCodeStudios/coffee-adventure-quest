@@ -42,9 +42,9 @@ export default class PourMeter extends Phaser.GameObjects.Container {
       targetWidth,
       height,
       COLORS.WARNING_YELLOW,
-      0.3
+      0.5
     );
-    this.targetIndicator.setStrokeStyle(3, COLORS.WARNING_YELLOW, 0.8);
+    this.targetIndicator.setStrokeStyle(4, COLORS.WARNING_YELLOW, 1.0);
     this.add(this.targetIndicator);
 
     // Text labels
@@ -127,7 +127,11 @@ export default class PourMeter extends Phaser.GameObjects.Container {
     const targetStart = this.width * this.targetZone.min - this.width / 2;
     const targetWidth = this.width * (this.targetZone.max - this.targetZone.min);
 
-    this.targetIndicator.x = targetStart + targetWidth / 2;
-    this.targetIndicator.width = targetWidth;
+    // Use Phaser methods to ensure visual updates
+    this.targetIndicator.setX(targetStart + targetWidth / 2);
+    this.targetIndicator.setSize(targetWidth, this.height);
+
+    // Also update the stroke to match
+    this.targetIndicator.setStrokeStyle(3, COLORS.WARNING_YELLOW, 0.8);
   }
 }
