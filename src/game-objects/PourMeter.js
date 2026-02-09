@@ -5,7 +5,7 @@ import { COLORS, FONTS } from '../utils/Constants.js';
  * PourMeter - Timing-based meter for milk pouring mini-game
  */
 export default class PourMeter extends Phaser.GameObjects.Container {
-  constructor(scene, x, y) {
+  constructor(scene, x, y, difficulty = { min: 0.45, max: 0.65 }) {
     super(scene, x, y);
     scene.add.existing(this);
 
@@ -13,7 +13,7 @@ export default class PourMeter extends Phaser.GameObjects.Container {
     this.currentFill = 0;
     this.isPouring = false;
     this.pourRate = 0.25; // Fill rate per second
-    this.targetZone = { min: 0.45, max: 0.65 }; // Sweet spot
+    this.targetZone = difficulty; // Sweet spot zone
 
     this.createMeter();
   }
@@ -118,5 +118,16 @@ export default class PourMeter extends Phaser.GameObjects.Container {
     this.fill.setFillStyle(COLORS.SUCCESS_GREEN);
     this.label.setText('Click to pour... click again to stop!');
     this.label.setColor('#333333');
+  }
+
+  setDifficulty(difficulty) {
+    this.targetZone = difficulty;
+
+    // Update target indicator position and size
+    const targetStart = this.width * this.targetZone.min - this.width / 2;
+    const targetWidth = this.width * (this.targetZone.max - this.targetZone.min);
+
+    this.targetIndicator.x = targetStart + targetWidth / 2;
+    this.targetIndicator.width = targetWidth;
   }
 }

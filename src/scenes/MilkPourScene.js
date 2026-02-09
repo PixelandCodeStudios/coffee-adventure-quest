@@ -18,7 +18,7 @@ export default class MilkPourScene extends Phaser.Scene {
     this.audioManager = data.audioManager;
     this.pouring = false;
     this.currentRound = 0;
-    this.totalRounds = 3; // Need to pour 3 times to fill the glass
+    this.totalRounds = 5; // Need to pour 5 times to fill the glass
     this.glassFullness = 0; // Track how full the glass is (0 to 1)
   }
 
@@ -64,7 +64,7 @@ export default class MilkPourScene extends Phaser.Scene {
   createMilkAndCup() {
     // Milk bottle sprite (cute pixel art!) - positioned on the counter
     this.milkBottle = this.add.image(400, 820, 'milk-bottle-sprite');
-    this.milkBottle.setScale(0.4); // Scale to appropriate size
+    this.milkBottle.setScale(0.2); // Scale to appropriate size
 
     // Coffee cup - clear glass positioned on the counter
     this.cupX = 1520;
@@ -79,8 +79,9 @@ export default class MilkPourScene extends Phaser.Scene {
     cupTop.setStrokeStyle(4, 0xCCCCCC);
 
     // Cup fill level (will fill progressively with milk)
+    // Position at bottom of cup, anchor at bottom, grows upward
     this.cupFill = this.add.rectangle(this.cupX, this.cupY + 75, 110, 0, COLORS.CREAM);
-    this.cupFill.setOrigin(0.5, 1);
+    this.cupFill.setOrigin(0.5, 1); // Anchor at bottom center
 
     // Round counter text
     this.roundText = this.add.text(this.cupX, this.cupY - 150, `Pour ${this.currentRound + 1}/${this.totalRounds}`, {
@@ -93,12 +94,26 @@ export default class MilkPourScene extends Phaser.Scene {
   }
 
   createPourMeter() {
-    this.pourMeter = new PourMeter(this, POSITIONS.CENTER_X, 550);
+    // Start with round 1 difficulty
+    this.pourMeter = new PourMeter(this, POSITIONS.CENTER_X, 550, this.getDifficulty(0));
 
     // Make the whole scene clickable
     this.input.on('pointerdown', () => {
       this.handleClick();
     });
+  }
+
+  getDifficulty(round) {
+    // Progressively shrink the target zone each round
+    // Last two rounds (3 and 4, zero-indexed) are super hard
+    const difficulties = [
+      { min: 0.40, max: 0.60 }, // Round 1 - Easy (20% window)
+      { min: 0.42, max: 0.58 }, // Round 2 - Medium (16% window)
+      { min: 0.44, max: 0.56 }, // Round 3 - Hard (12% window)
+      { min: 0.46, max: 0.54 }, // Round 4 - Super Hard (8% window)
+      { min: 0.48, max: 0.52 }  // Round 5 - Ultra Hard (4% window)
+    ];
+    return difficulties[round];
   }
 
   showInstructions() {
@@ -144,9 +159,13 @@ export default class MilkPourScene extends Phaser.Scene {
       this.pourMeter.update(delta);
 
       // Animate cup filling based on current round progress plus previous rounds
+      // Fill upward from bottom - height increases as we pour
       const currentRoundProgress = this.pourMeter.currentFill / this.totalRounds;
       const totalProgress = this.glassFullness + currentRoundProgress;
-      const fillHeight = 140 * totalProgress;
+      const maxFillHeight = 140; // Maximum fill height (cup is 150px tall)
+      const fillHeight = maxFillHeight * totalProgress;
+
+      // Set height to grow upward from bottom
       this.cupFill.height = fillHeight;
     }
   }
@@ -176,21 +195,29 @@ export default class MilkPourScene extends Phaser.Scene {
     this.time.delayedCall(1500, () => {
       // Reset for retry (same round)
       this.pourMeter.reset();
+      this.pourMeter.setDifficulty(this.getDifficulty(this.currentRound));
       // Keep the glass at its current fullness from previous successful rounds
-      this.cupFill.height = 140 * this.glassFullness;
+      const maxFillHeight = 140;
+      this.cupFill.height = maxFillHeight * this.glassFullness;
     });
   }
 
   resetForNextRound() {
-    // Show encouragement message
+    // Show encouragement message with difficulty hint
+    let encouragement = `Great! Pour ${this.currentRound + 1} of ${this.totalRounds}`;
+    if (this.currentRound >= 3) {
+      encouragement += '\nSuper hard mode! 🔥';
+    }
+
     const msg = this.add.text(POSITIONS.CENTER_X, POSITIONS.CENTER_Y,
-      `Great! Pour ${this.currentRound + 1} of ${this.totalRounds}`, {
+      encouragement, {
       fontSize: '32px',
       fontFamily: FONTS.TITLE,
       color: '#6F4E37',
       fontStyle: 'bold',
       stroke: '#FFFFFF',
-      strokeThickness: 4
+      strokeThickness: 4,
+      align: 'center'
     });
     msg.setOrigin(0.5);
     msg.setAlpha(0);
@@ -207,8 +234,9 @@ export default class MilkPourScene extends Phaser.Scene {
     // Update round counter
     this.roundText.setText(`Pour ${this.currentRound + 1}/${this.totalRounds}`);
 
-    // Reset pour meter for next round
+    // Reset pour meter for next round with increased difficulty
     this.pourMeter.reset();
+    this.pourMeter.setDifficulty(this.getDifficulty(this.currentRound));
   }
 
   completeMiniGame() {
