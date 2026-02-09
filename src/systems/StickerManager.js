@@ -175,8 +175,21 @@ export default class StickerManager {
 
       default:
         graphics.fillStyle(COLORS.GOLD);
-        graphics.fillStar(0, 0, 5, 40, 20, 0);
-        graphics.strokeStar(0, 0, 5, 40, 20, 0);
+        // Draw a star shape using a polygon
+        const outerRadius = 40;
+        const innerRadius = 20;
+        const points = [];
+        for (let i = 0; i < 10; i++) {
+          const radius = i % 2 === 0 ? outerRadius : innerRadius;
+          const angle = (i * Math.PI) / 5;
+          points.push({
+            x: Math.cos(angle - Math.PI / 2) * radius,
+            y: Math.sin(angle - Math.PI / 2) * radius
+          });
+        }
+        graphics.fillPoints(points, true);
+        graphics.lineStyle(2, COLORS.BLACK);
+        graphics.strokePoints(points, true);
     }
 
     return graphics;

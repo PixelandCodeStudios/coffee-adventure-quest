@@ -13,10 +13,16 @@ export default class ParticleManager {
    * Create sparkle particle emitter
    */
   createSparkleEmitter() {
-    // Create a simple star-shaped graphic for particles
+    // Create a simple diamond-shaped graphic for particles
     const graphics = this.scene.make.graphics({ x: 0, y: 0, add: false });
     graphics.fillStyle(COLORS.GOLD, 1);
-    graphics.fillStar(8, 8, 5, 8, 4, 0);
+    // Draw a diamond/star shape using a polygon
+    graphics.fillPoints([
+      { x: 8, y: 0 },   // top
+      { x: 12, y: 8 },  // right
+      { x: 8, y: 16 },  // bottom
+      { x: 4, y: 8 }    // left
+    ], true);
     graphics.generateTexture('particle-star', 16, 16);
     graphics.destroy();
 
