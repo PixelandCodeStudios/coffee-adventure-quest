@@ -17,6 +17,9 @@ export default class MilkPourScene extends Phaser.Scene {
     this.stateManager = data.stateManager;
     this.audioManager = data.audioManager;
     this.pouring = false;
+    this.currentRound = 0;
+    this.totalRounds = 3; // Need to pour 3 times to fill the glass
+    this.glassFullness = 0; // Track how full the glass is (0 to 1)
   }
 
   create() {
@@ -59,23 +62,34 @@ export default class MilkPourScene extends Phaser.Scene {
   }
 
   createMilkAndCup() {
-    // Milk bottle sprite (cute pixel art!)
-    const milkBottle = this.add.image(300, 400, 'milk-bottle-sprite');
-    milkBottle.setScale(0.4); // Scale to appropriate size
+    // Milk bottle sprite (cute pixel art!) - positioned on the counter
+    this.milkBottle = this.add.image(400, 820, 'milk-bottle-sprite');
+    this.milkBottle.setScale(0.4); // Scale to appropriate size
 
-    // Coffee cup
-    const cupX = 1600;
-    const cupY = 500;
+    // Coffee cup - clear glass positioned on the counter
+    this.cupX = 1520;
+    this.cupY = 825;
 
-    const cupBody = this.add.rectangle(cupX, cupY, 120, 150, 0x8B4513);
-    cupBody.setStrokeStyle(4, COLORS.BLACK);
+    // Glass cup body (clear/translucent)
+    const cupBody = this.add.rectangle(this.cupX, this.cupY, 120, 150, 0xFFFFFF, 0.3);
+    cupBody.setStrokeStyle(4, 0xCCCCCC);
 
-    const cupTop = this.add.ellipse(cupX, cupY - 75, 130, 40, 0xA0522D);
-    cupTop.setStrokeStyle(4, COLORS.BLACK);
+    // Glass rim
+    const cupTop = this.add.ellipse(this.cupX, this.cupY - 75, 130, 40, 0xFFFFFF, 0.4);
+    cupTop.setStrokeStyle(4, 0xCCCCCC);
 
-    // Cup fill level (will fill during animation)
-    this.cupFill = this.add.rectangle(cupX, cupY + 75, 110, 0, COLORS.CREAM);
+    // Cup fill level (will fill progressively with milk)
+    this.cupFill = this.add.rectangle(this.cupX, this.cupY + 75, 110, 0, COLORS.CREAM);
     this.cupFill.setOrigin(0.5, 1);
+
+    // Round counter text
+    this.roundText = this.add.text(this.cupX, this.cupY - 150, `Pour ${this.currentRound + 1}/${this.totalRounds}`, {
+      fontSize: '24px',
+      fontFamily: FONTS.TITLE,
+      color: '#333333',
+      fontStyle: 'bold'
+    });
+    this.roundText.setOrigin(0.5);
   }
 
   createPourMeter() {
@@ -129,18 +143,30 @@ export default class MilkPourScene extends Phaser.Scene {
     if (this.pourMeter) {
       this.pourMeter.update(delta);
 
-      // Animate cup filling
-      const fillHeight = 140 * this.pourMeter.currentFill;
+      // Animate cup filling based on current round progress plus previous rounds
+      const currentRoundProgress = this.pourMeter.currentFill / this.totalRounds;
+      const totalProgress = this.glassFullness + currentRoundProgress;
+      const fillHeight = 140 * totalProgress;
       this.cupFill.height = fillHeight;
     }
   }
 
   onPourSuccess() {
-    this.particleManager.sparkleAt(1600, 500, 20);
+    this.particleManager.sparkleAt(this.cupX, this.cupY, 20);
     TransitionManager.flash(this, COLORS.SUCCESS_GREEN);
 
+    // Increment round and update glass fullness
+    this.currentRound++;
+    this.glassFullness = this.currentRound / this.totalRounds;
+
     this.time.delayedCall(1500, () => {
-      this.completeMiniGame();
+      if (this.currentRound >= this.totalRounds) {
+        // All rounds complete - glass is full!
+        this.completeMiniGame();
+      } else {
+        // More rounds needed - reset for next pour
+        this.resetForNextRound();
+      }
     });
   }
 
@@ -148,17 +174,48 @@ export default class MilkPourScene extends Phaser.Scene {
     TransitionManager.shake(this, 0.005);
 
     this.time.delayedCall(1500, () => {
-      // Reset for retry
+      // Reset for retry (same round)
       this.pourMeter.reset();
-      this.cupFill.height = 0;
+      // Keep the glass at its current fullness from previous successful rounds
+      this.cupFill.height = 140 * this.glassFullness;
     });
+  }
+
+  resetForNextRound() {
+    // Show encouragement message
+    const msg = this.add.text(POSITIONS.CENTER_X, POSITIONS.CENTER_Y,
+      `Great! Pour ${this.currentRound + 1} of ${this.totalRounds}`, {
+      fontSize: '32px',
+      fontFamily: FONTS.TITLE,
+      color: '#6F4E37',
+      fontStyle: 'bold',
+      stroke: '#FFFFFF',
+      strokeThickness: 4
+    });
+    msg.setOrigin(0.5);
+    msg.setAlpha(0);
+
+    this.tweens.add({
+      targets: msg,
+      alpha: 1,
+      duration: 300,
+      yoyo: true,
+      hold: 800,
+      onComplete: () => msg.destroy()
+    });
+
+    // Update round counter
+    this.roundText.setText(`Pour ${this.currentRound + 1}/${this.totalRounds}`);
+
+    // Reset pour meter for next round
+    this.pourMeter.reset();
   }
 
   completeMiniGame() {
     this.stateManager.markMiniGameComplete('milkPour', STICKER_KEYS.MILK);
 
     const successMsg = this.add.text(POSITIONS.CENTER_X, POSITIONS.CENTER_Y,
-      '✨ Perfect pour! ✨\nMilk added to coffee!', {
+      '✨ Glass is Full! ✨\nPerfect milk pour!\nMilk added to coffee!', {
       fontSize: '42px',
       fontFamily: FONTS.TITLE,
       color: '#FFD700',
@@ -178,6 +235,9 @@ export default class MilkPourScene extends Phaser.Scene {
       duration: 500,
       ease: 'Back.easeOut'
     });
+
+    // Extra sparkles for completing all rounds
+    this.particleManager.sparkleAt(this.cupX, this.cupY, 40);
 
     this.time.delayedCall(2500, () => {
       TransitionManager.transitionTo(this, SCENES.BEACH_DISCOVERY, {
