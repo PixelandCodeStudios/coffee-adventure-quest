@@ -105,13 +105,13 @@ export default class MilkPourScene extends Phaser.Scene {
 
   getDifficulty(round) {
     // Progressively shrink the target zone each round
-    // Last two rounds (3 and 4, zero-indexed) are super hard
+    // Balanced difficulty that's challenging but fair
     const difficulties = [
-      { min: 0.40, max: 0.60 }, // Round 1 - Easy (20% window)
-      { min: 0.42, max: 0.58 }, // Round 2 - Medium (16% window)
-      { min: 0.44, max: 0.56 }, // Round 3 - Hard (12% window)
-      { min: 0.46, max: 0.54 }, // Round 4 - Super Hard (8% window)
-      { min: 0.48, max: 0.52 }  // Round 5 - Ultra Hard (4% window)
+      { min: 0.35, max: 0.65 }, // Round 1 - Easy (30% window)
+      { min: 0.38, max: 0.62 }, // Round 2 - Medium (24% window)
+      { min: 0.41, max: 0.59 }, // Round 3 - Medium-Hard (18% window)
+      { min: 0.43, max: 0.57 }, // Round 4 - Hard (14% window)
+      { min: 0.45, max: 0.55 }  // Round 5 - Challenging (10% window)
     ];
     return difficulties[round];
   }
@@ -205,8 +205,10 @@ export default class MilkPourScene extends Phaser.Scene {
   resetForNextRound() {
     // Show encouragement message with difficulty hint
     let encouragement = `Great! Pour ${this.currentRound + 1} of ${this.totalRounds}`;
-    if (this.currentRound >= 3) {
-      encouragement += '\nSuper hard mode! 🔥';
+    if (this.currentRound >= 4) {
+      encouragement += '\nFinal pour! You got this! 🔥';
+    } else if (this.currentRound >= 3) {
+      encouragement += '\nGetting tricky now! 💪';
     }
 
     const msg = this.add.text(POSITIONS.CENTER_X, POSITIONS.CENTER_Y,
@@ -268,9 +270,11 @@ export default class MilkPourScene extends Phaser.Scene {
     this.particleManager.sparkleAt(this.cupX, this.cupY, 40);
 
     this.time.delayedCall(2500, () => {
-      TransitionManager.transitionTo(this, SCENES.BEACH_DISCOVERY, {
+      TransitionManager.transitionTo(this, SCENES.CUTSCENE, {
         stateManager: this.stateManager,
-        audioManager: this.audioManager
+        audioManager: this.audioManager,
+        cutsceneId: 'beachArrival',
+        nextScene: SCENES.BEACH_DISCOVERY
       });
     });
   }
