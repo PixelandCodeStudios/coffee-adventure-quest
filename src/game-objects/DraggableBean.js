@@ -32,17 +32,33 @@ export default class DraggableBean extends Phaser.GameObjects.Container {
 
     this.add(graphics);
 
-    // Make interactive
+    // Make interactive with explicit hit area for Container
     this.setSize(60, 40);
-    this.setInteractive({ draggable: true, useHandCursor: true });
+    this.setInteractive(
+      new Phaser.Geom.Rectangle(-30, -20, 60, 40),
+      Phaser.Geom.Rectangle.Contains
+    );
+
+    // Enable dragging
+    this.scene.input.setDraggable(this);
   }
 
   setupDragging() {
     let dragStartX, dragStartY;
 
+    // Set cursor style
+    this.on('pointerover', () => {
+      this.scene.input.setDefaultCursor('grab');
+    });
+
+    this.on('pointerout', () => {
+      this.scene.input.setDefaultCursor('default');
+    });
+
     this.on('dragstart', (pointer) => {
       dragStartX = this.x;
       dragStartY = this.y;
+      this.scene.input.setDefaultCursor('grabbing');
       this.setScale(1.1);
       this.setAlpha(0.8);
       this.scene.audioManager?.playSound('click');
@@ -54,6 +70,7 @@ export default class DraggableBean extends Phaser.GameObjects.Container {
     });
 
     this.on('dragend', (pointer) => {
+      this.scene.input.setDefaultCursor('default');
       this.setScale(1);
       this.setAlpha(1);
       this.checkDrop();
