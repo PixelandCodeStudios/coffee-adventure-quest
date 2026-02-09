@@ -220,9 +220,12 @@ export default class BootScene extends Phaser.Scene {
       this.audioManager.playSound('click');
 
       TransitionManager.fadeOut(this).then(() => {
-        this.scene.start(SCENES.COFFEE_BEAN, {
+        // Start with opening cutscene
+        this.scene.start(SCENES.CUTSCENE, {
           stateManager: this.registry.get('stateManager'),
-          audioManager: this.registry.get('audioManager')
+          audioManager: this.registry.get('audioManager'),
+          cutsceneId: 'opening',
+          nextScene: SCENES.COFFEE_BEAN
         });
       });
     });

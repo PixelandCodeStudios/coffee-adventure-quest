@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { GAME_CONFIG } from './utils/Constants.js';
 import BootScene from './scenes/BootScene.js';
+import CutsceneScene from './scenes/CutsceneScene.js';
 import CoffeeBeanScene from './scenes/CoffeeBeanScene.js';
 import MilkPourScene from './scenes/MilkPourScene.js';
 import BeachDiscoveryScene from './scenes/BeachDiscoveryScene.js';
@@ -39,6 +40,7 @@ const config = {
   },
   scene: [
     BootScene,
+    CutsceneScene,
     CoffeeBeanScene,
     MilkPourScene,
     BeachDiscoveryScene,

@@ -106,28 +106,8 @@ export default class BeachDiscoveryScene extends Phaser.Scene {
 
     this.ingredientFound = true;
 
-    // Show message that crab steals it!
-    const msg = this.add.text(POSITIONS.CENTER_X, 400,
-      '🦀 Oh no! A crab grabbed it!', {
-      fontSize: '36px',
-      fontFamily: FONTS.TITLE,
-      color: '#FF6600',
-      fontStyle: 'bold',
-      stroke: '#000000',
-      strokeThickness: 5,
-      align: 'center'
-    });
-    msg.setOrigin(0.5);
-    msg.setAlpha(0);
-
-    this.tweens.add({
-      targets: msg,
-      alpha: 1,
-      scaleX: 1.2,
-      scaleY: 1.2,
-      duration: 500,
-      ease: 'Back.easeOut'
-    });
+    // Sparkle effect on finding
+    this.particleManager.sparkleAt(ingredientObject.x, ingredientObject.y, 20);
 
     // Animate ingredient being stolen
     this.tweens.add({
@@ -142,11 +122,13 @@ export default class BeachDiscoveryScene extends Phaser.Scene {
     // Mark shell sticker unlocked
     this.stateManager.markMiniGameComplete('beachDiscovery', STICKER_KEYS.SHELL);
 
-    // Transition to crab photography scene
-    this.time.delayedCall(2500, () => {
-      TransitionManager.transitionTo(this, SCENES.CRAB_PHOTOGRAPHY, {
+    // Transition to crab steal cutscene
+    this.time.delayedCall(1000, () => {
+      TransitionManager.transitionTo(this, SCENES.CUTSCENE, {
         stateManager: this.stateManager,
-        audioManager: this.audioManager
+        audioManager: this.audioManager,
+        cutsceneId: 'crabSteal',
+        nextScene: SCENES.CRAB_PHOTOGRAPHY
       });
     });
   }

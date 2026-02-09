@@ -189,11 +189,13 @@ export default class CoffeeBeanScene extends Phaser.Scene {
       ease: 'Back.easeOut'
     });
 
-    // Transition to next scene
+    // Transition to cutscene, then next scene
     this.time.delayedCall(2500, () => {
-      TransitionManager.transitionTo(this, SCENES.MILK_POUR, {
+      TransitionManager.transitionTo(this, SCENES.CUTSCENE, {
         stateManager: this.stateManager,
-        audioManager: this.audioManager
+        audioManager: this.audioManager,
+        cutsceneId: 'afterBeans',
+        nextScene: SCENES.MILK_POUR
       });
     });
   }

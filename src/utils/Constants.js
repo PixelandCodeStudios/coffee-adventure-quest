@@ -32,6 +32,7 @@ export const GAME_CONFIG = {
 
 export const SCENES = {
   BOOT: 'BootScene',
+  CUTSCENE: 'CutsceneScene',
   COFFEE_BEAN: 'CoffeeBeanScene',
   MILK_POUR: 'MilkPourScene',
   BEACH_DISCOVERY: 'BeachDiscoveryScene',

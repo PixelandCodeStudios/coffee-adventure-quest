@@ -152,11 +152,13 @@ export default class CrabPhotographyScene extends Phaser.Scene {
     // Unlock crab sticker
     this.stateManager.markMiniGameComplete('crabPhotography', STICKER_KEYS.CRAB);
 
-    // Transition to brewing scene
+    // Transition to brewing scene via cutscene
     this.time.delayedCall(2500, () => {
-      TransitionManager.transitionTo(this, SCENES.BREWING, {
+      TransitionManager.transitionTo(this, SCENES.CUTSCENE, {
         stateManager: this.stateManager,
-        audioManager: this.audioManager
+        audioManager: this.audioManager,
+        cutsceneId: 'beforeBrewing',
+        nextScene: SCENES.BREWING
       });
     });
   }
