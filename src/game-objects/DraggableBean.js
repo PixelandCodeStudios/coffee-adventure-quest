@@ -13,6 +13,7 @@ export default class DraggableBean extends Phaser.GameObjects.Container {
     this.startX = x;
     this.startY = y;
     this.collected = false;
+    this.floatTween = null; // Store reference to float animation
 
     this.createBean();
     this.setupDragging();
@@ -62,6 +63,11 @@ export default class DraggableBean extends Phaser.GameObjects.Container {
       this.setScale(1.1);
       this.setAlpha(0.8);
       this.scene.audioManager?.playSound('click');
+
+      // Stop float animation while dragging
+      if (this.floatTween) {
+        this.floatTween.pause();
+      }
     });
 
     this.on('drag', (pointer, dragX, dragY) => {
@@ -120,7 +126,20 @@ export default class DraggableBean extends Phaser.GameObjects.Container {
       x: this.startX,
       y: this.startY,
       duration: 300,
-      ease: 'Back.easeOut'
+      ease: 'Back.easeOut',
+      onComplete: () => {
+        // Resume float animation after returning
+        if (this.floatTween) {
+          this.floatTween.resume();
+        }
+      }
     });
+  }
+
+  /**
+   * Set the float animation tween (called by scene)
+   */
+  setFloatTween(tween) {
+    this.floatTween = tween;
   }
 }

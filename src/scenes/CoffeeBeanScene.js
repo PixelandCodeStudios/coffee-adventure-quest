@@ -106,8 +106,8 @@ export default class CoffeeBeanScene extends Phaser.Scene {
       const bean = new DraggableBean(this, pos.x, pos.y);
       this.beans.push(bean);
 
-      // Add subtle float animation
-      this.tweens.add({
+      // Add subtle float animation and store reference in bean
+      const floatTween = this.tweens.add({
         targets: bean,
         y: pos.y - 10,
         duration: 1000 + Math.random() * 500,
@@ -115,6 +115,9 @@ export default class CoffeeBeanScene extends Phaser.Scene {
         repeat: -1,
         ease: 'Sine.easeInOut'
       });
+
+      // Give bean reference to its float animation
+      bean.setFloatTween(floatTween);
     });
   }
 
