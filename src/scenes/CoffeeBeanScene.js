@@ -45,9 +45,11 @@ export default class CoffeeBeanScene extends Phaser.Scene {
 
   createBackground() {
     const bg = this.add.rectangle(POSITIONS.CENTER_X, POSITIONS.CENTER_Y, 1920, 1080, COLORS.CREAM);
+    bg.setDepth(0); // Background layer
 
     // Kitchen counter
     const counter = this.add.rectangle(POSITIONS.CENTER_X, 900, 1920, 400, 0xA0826D);
+    counter.setDepth(1); // Counter above background
 
     // Title
     const title = this.add.text(POSITIONS.CENTER_X, 100, 'Coffee Bean Collection', {
@@ -59,6 +61,7 @@ export default class CoffeeBeanScene extends Phaser.Scene {
       strokeThickness: 4
     });
     title.setOrigin(0.5);
+    title.setDepth(5); // UI text on top
   }
 
   createGrinder() {
@@ -68,16 +71,20 @@ export default class CoffeeBeanScene extends Phaser.Scene {
 
     const grinderBase = this.add.rectangle(grinderX, grinderY + 40, 180, 120, 0x8B4513);
     grinderBase.setStrokeStyle(4, 0x000000);
+    grinderBase.setDepth(2); // Grinder below beans
 
     const grinderTop = this.add.rectangle(grinderX, grinderY - 60, 140, 80, 0xA0522D);
     grinderTop.setStrokeStyle(4, 0x000000);
+    grinderTop.setDepth(2); // Grinder below beans
 
     const handle = this.add.rectangle(grinderX + 90, grinderY - 60, 60, 15, 0x654321);
     handle.setStrokeStyle(2, 0x000000);
+    handle.setDepth(2); // Grinder below beans
 
     // Grinder container for collision detection
     this.grinder = this.add.container(grinderX, grinderY);
     this.grinder.setSize(180, 200);
+    this.grinder.setDepth(2); // Grinder below beans
 
     // Progress text
     this.progressText = this.add.text(grinderX, grinderY + 130, `0 / ${this.beansRequired}`, {
@@ -89,6 +96,7 @@ export default class CoffeeBeanScene extends Phaser.Scene {
       strokeThickness: 4
     });
     this.progressText.setOrigin(0.5);
+    this.progressText.setDepth(5); // UI text on top
   }
 
   createBeans() {

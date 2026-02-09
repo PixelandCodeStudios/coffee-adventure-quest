@@ -22,11 +22,14 @@ export default class DraggableBean extends Phaser.GameObjects.Container {
   createBean() {
     // Create bean sprite (cute kawaii bean!)
     const beanSprite = this.scene.add.image(0, 0, 'coffee-bean-sprite');
-    beanSprite.setScale(0.15); // Scale down to appropriate size
+    beanSprite.setScale(0.08); // Scale down to appropriate size
     this.add(beanSprite);
 
+    // Set depth to ensure beans appear above background
+    this.setDepth(10);
+
     // Make interactive with explicit hit area for Container
-    const hitAreaSize = 80;
+    const hitAreaSize = 60;
     this.setSize(hitAreaSize, hitAreaSize);
     this.setInteractive(
       new Phaser.Geom.Rectangle(-hitAreaSize/2, -hitAreaSize/2, hitAreaSize, hitAreaSize),
